@@ -37,21 +37,27 @@ Run `au test` to test the project.
 - CRU* users (sign up & settings page - no deletion)
 - CR*D Kweets (editor page - no updating)
 - GET and display paginated lists of Kweets
-- GET paginated list of followers
-- GET paginated list of following
-- GET paginated list of favorited Kweets
-- Favorite a Kweet
-- Follow other users
+  - Find by author
+  - Find by favorited Kweets
+  - Find with specific hashtag
+- GET and display paginated list of profiles
+  - Find by partial username
+  - Find by followers
+  - Find by following
+- (Un)Favorite a Kweet
+- (Un)Follow other users
 
 **routes:**
 
 - *Home page* (URL: `/` | `/home` )
     - List of trending hashtags of the week
-    - Paginated list of Kweets pulled from either Feed (requires authentication), Global, or by selected hashtag
+    - Paginated list of Kweets pulled from either Feed (requires authentication), Global, or by selected trending hashtag
 - *Sign in/Sign up pages* (URL: `/login`, `/register` )
     - Uses JWT (store the token in localStorage)
 - *Settings page* (URL: `/settings` )
 - *Editor page* (URL: `/editor` )
+- *Search page* (URL: `/search:q?`)
+    - Search for Kweets by hashtag or profiles by partial username
 - *Profile page* (URL: `/@/:username` )
     - Show basic user info
     - Paginated timeline from author's created Kweets and author's favorited Kweets
