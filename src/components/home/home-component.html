@@ -1,0 +1,48 @@
+<template>
+  <require from="./home-component.css"></require>
+  <require from="../../resources/elements/kweet-list"></require>
+
+  <div class="home-page">
+
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <p class="title">Kwetter</p>
+          <p class="subtitle">Contains everything you need to share <strong>your quality content</strong> on our socialmedia platform</p>
+        </div>
+      </div>
+    </section>
+
+    <div id="container" class="container">
+      <div class="columns">
+
+        <div class="column is-three-quarters">
+          <nav class="level is-mobile">
+            <div class="level-left">
+              <a class="level-item ${sharedState.isAuthenticated ? '' : 'has-text-grey-light'} ${shownList === 'feed' ? ' active' : ''}" style.bind="sharedState.isAuthenticated ? '' : 'cursor: default;'" click.delegate="setListTo('feed')">Your Feed</a>
+              <a class="level-item" class.bind="shownList === 'all' ? 'active' : ''" click.delegate="setListTo('all')">Global Feed</a>
+            </div>
+          </nav>
+
+          <kweet-list kweets.bind="kweets" total-pages.bind="totalPages" 
+            current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)"></kweet-list>
+        </div>
+
+        <div class="column">
+          <div class="sidebar">
+            <p>Trends this week</p>
+
+            <div class="tags">
+              <span repeat.for="tag of tags" class="tag" class.bind="filterTag && filterTag === tag ? 'is-primary' : ''" style="cursor: pointer;" click.delegate="setListTo('hashtag', tag)">${tag}</span>
+              <div show.bind="tags.length === 0">
+                <img class="image" style="display: block; margin: 0 auto;" width="128" src="/assets/duck-duck-goose.png" />
+                <i>No trends this week... yet.</i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>

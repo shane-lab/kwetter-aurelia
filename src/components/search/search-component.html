@@ -1,0 +1,50 @@
+<template>
+  <require from="../../resources/elements/kweet-list"></require>
+  <require from="../../resources/elements/profile-list"></require>
+
+  <div class="search-page">
+    <div class="container page">
+      <div class="columns">
+        <div class="column">
+          <h1 class="title">Search ${type.name}</h1>
+
+          <form>
+            <div class="field">
+              <div class="control">
+                <input class="input is-medium" type="text" placeholder="Your search criteria" value.bind="query">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <label class="radio" repeat.for="t of types">
+                  <input type="radio" name="searchType" model.bind="t" checked.bind="type"> ${t.desc}
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary is-wide" disabled.bind="isDisabled" click.delegate="search()">Search</button>
+              </div>
+            </div>
+          </form>
+
+          <hr>
+
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <p if.bind="infoMessage" class="has-text-info has-text-centered inline-flex">${infoMessage}</p>
+
+          <div show.bind="items.length">
+            <label class="subtitle">Found ${searchedType.name}</label>
+            <kweet-list if.bind="searchedType.id === 0" kweets.bind="items" total-pages.bind="totalPages" current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)"></kweet-list>
+  
+            <profile-list if.bind="searchedType.id === 1" profiles.bind="items" total-pages.bind="totalPages" current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)"></profile-list>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,69 @@
+<template>
+  <div class="auth-page">
+    <div class="container page">
+      <div class="columns">
+
+        <div class="column">
+          <h1 class="title">Sign ${type === 'login' ? 'in' : 'up'}</h1>
+
+          <ul class="error-messages">
+            <li repeat.for="key of errors | keys">${key}&nbsp;${errors[key]}</li>
+          </ul>
+
+          <form>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Username</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Your Name" value.bind="username & validate">
+                  </div>
+                  <p class="help is-danger" show.bind="usernameError">${usernameError}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Password</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input" type="password" placeholder="Password" value.bind="password & validate">
+                  </div>
+                  <p class="help is-danger" show.bind="passwordError">${passwordError}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <!-- Left empty for spacing -->
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-primary" click.trigger="submit()" disabled.bind="!canSave">Sign ${type === 'login' ? 'in' : 'up'}</button>
+                  </div>
+                  <p class="help is-danger" show.bind="responseError">${responseError}</p>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+          <nav class="level is-mobile">
+            <div class="level-left">
+              <a class="level-item" route-href="route: login" if.bind="type === 'register'">Have an account?</a>
+              <a class="level-item" route-href="route: register" if.bind="type === 'login'">Need an account?</a>
+            </div>
+          </nav>
+
+          <hr>
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>

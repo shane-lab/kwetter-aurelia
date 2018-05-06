@@ -1,0 +1,81 @@
+<template>
+  <require from="./profile-component.css"></require>
+  <require from="../../resources/elements/profile-picture"></require>
+
+  <div class="profile-page">
+
+    <section class="hero is-info">
+      <div class="hero-body">
+        <div class="container">
+          <p class="title">
+            <profile-picture style="display: inline-flex;" image-url="http://localhost:8080/api/v1/users/${profile.username}/avatar"
+              is-large="true"></profile-picture>&nbsp;${profile.username}</p>
+
+          <nav class="level">
+            <div class="level-item is-mobile has-text-centered">
+              <div>
+                <p class="heading">Kweets</p>
+                <p class="title">${profile.kweets}</p>
+              </div>
+            </div>
+            <div class="level-item has-text-centered">
+              <div>
+                <p class="heading">Following</p>
+                <p class="title">${profile.following}</p>
+              </div>
+            </div>
+            <div class="level-item has-text-centered">
+              <div>
+                <p class="heading">Followers</p>
+                <p class="title">${profile.followers}</p>
+              </div>
+            </div>
+          </nav>
+
+          <p class="subtitle" class.bind="!profile.bio ? 'unset' : ''">${profile.bio || 'No biography is set for this user'}</p>
+          <p class="sub-subtitle"><i class="icon ion-calendar"></i>&nbsp;joined on&nbsp;${profile.createdAt | date}</p>
+          <p class="sub-subtitle" class.bind="!profile.location ? 'unset' : ''"><i class="icon ion-navigate"></i>&nbsp;${profile.location || 'location not shared'}</p>
+          <p class="sub-subtitle" class.bind="!profile.website ? 'unset' : ''"><i class="icon ion-android-globe"></i>&nbsp;<span innerhtml.bind="(profile.website || '/') | url"></span></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="user-info">
+      <div class="container">
+        <div class="columns">
+
+          <div class="column">
+            <button class="button round" class.bind="isFollowing ? '' : checkedFollow ? 'is-primary' : ''" if.bind="sharedState.isAuthenticated && !isUser" click.delegate="onToggleFollowing()" disabled.bind="!checkedFollow">
+              <i class="ion-plus-round"></i>
+              &nbsp;
+              ${isFollowing ? 'Unfollow' : 'Follow'}
+            </button>
+            <a route-href="route: settings" if.bind="isUser">
+              <i class="ion-gear-a"></i>&nbsp;Edit Profile Settings
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="columns">
+
+        <div class="column">
+          <nav class="level is-mobile">
+            <div class="level-left">
+              <a class="level-item" class.bind="router.currentInstruction.config.name === 'profile-kweets' ? 'active' : ''" route-href="route: profile-kweets">Timeline</a>
+              <a class="level-item" class.bind="router.currentInstruction.config.name === 'profile-favorites' ? 'active' : ''" route-href="route: profile-favorites">Favorited Posts</a>
+              <a class="level-item" class.bind="router.currentInstruction.config.name === 'profile-followers' ? 'active' : ''" route-href="route: profile-followers">Followers</a>
+              <a class="level-item" class.bind="router.currentInstruction.config.name === 'profile-following' ? 'active' : ''" route-href="route: profile-following">Following</a>
+            </div>
+          </nav>
+
+          <router-view></router-view>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

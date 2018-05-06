@@ -1,0 +1,70 @@
+<template>
+  <nav class="navbar is-boxed" style="border-bottom: #aaa 1px solid;">
+    <div class="navbar-brand">
+      <a class="navbar-item" route-href="route: home">
+        <img src="/assets/logo.png" alt="Kwetter: a superior social mediaplatform" width="112" height="28">
+      </a>
+      <div class="navbar-burger burger" data-target="navbarMenu" click.trigger="toggleMenu($event)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navbarMenu" class="navbar-menu" class.bind="menuOpen ? 'is-active' : ''">
+      <div class="navbar-start">
+        <a class="navbar-item ${(activeRoute === 'home' ? 'is-active' : '')}" route-href="route: home">
+          Home
+        </a>
+        <a class="navbar-item ${(activeRoute === 'search' ? 'is-active' : '')}" route-href="route: search" if.bind="!sharedState.isAuthenticated">
+          <i class="icon ion-search"></i>&nbsp;Search
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable" if.bind="sharedState.currentUser && sharedState.isAuthenticated">
+          <span class="navbar-link">More</span>
+          <div class="navbar-dropdown is-boxed">
+            <a class="navbar-item" route-href="route: search">
+              <i class="icon ion-search"></i>&nbsp;Search
+            </a>
+            <a class="navbar-item" route-href="route: profile; params.bind: {name: sharedState.currentUser.username, view: 'favorites'}">
+              <i class="icon ion-ios-heart"></i>&nbsp;Favorites
+            </a>
+            <a class="navbar-item" route-href="route: profile; params.bind: {name: sharedState.currentUser.username, view: 'followers'}">
+              <i class="icon ion-ios-people"></i>&nbsp;Followers
+            </a>
+            <a class="navbar-item" route-href="route: profile; params.bind: {name: sharedState.currentUser.username, view: 'following'}">
+              <i class="icon ion-person-stalker"></i>&nbsp;Following
+            </a>
+            <a class="navbar-item ${(activeRoute === 'settings' ? 'is-active' : '')}" route-href="route: settings">
+              <i class="icon ion-gear-a"></i>&nbsp;Settings
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" click.delegate="logout()">
+              <i class="icon ion-log-out"></i>&nbsp;Sign out
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control" if.bind="sharedState.currentUser && sharedState.isAuthenticated">
+              <a class="bd-tw-button button" route-href="route: editor">
+                <i class="ion-compose"></i>&nbsp;New Post
+              </a>
+            </p>
+            <p class="control" if.bind="sharedState.currentUser && sharedState.isAuthenticated">
+              <a class="navbar-item ${(activeRoute === 'profile' ? 'is-active' : '')}" route-href="route: profile; params.bind: {name: sharedState.currentUser.username}">${sharedState.currentUser.username}</a>
+            </p>
+            <p class="control" if.bind="!sharedState.isAuthenticated">
+              <a class="navbar-item ${(activeRoute === 'login' ? 'is-active' : '')}" route-href="route: login">Sign in</a>
+            </p>
+            <p class="control" if.bind="!sharedState.isAuthenticated">
+              <a class="button is-primary" route-href="route: register">Sign up</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>

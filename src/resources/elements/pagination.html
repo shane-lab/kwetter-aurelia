@@ -1,0 +1,59 @@
+<template>
+  <nav 
+    class="pagination is-centered"
+    role="navigation"
+    aria-label="pagination"
+    style="margin-top: 10px;"
+    if.bind="totalPages > 1">
+    <div style="display: contents;">
+      <a 
+        class="pagination-previous button" 
+        class.bind="page === 1 ? 'is-static' : ''" 
+        disabled.bind="page === 1" 
+        click.delegate="updatePage($event, page - 1)">Previous</a>
+      <a 
+        class="pagination-next button"
+        class.bind="page === (totalPages) ? 'is-static' : ''"
+        disabled.bind="page === (totalPages)" 
+        click.delegate="updatePage($event, page + 1)">Next page</a>
+    </div>
+    <ul 
+      class="pagination-list"
+      show.bind="totalPages > 2">
+      <li 
+        click.delegate="updatePage($event, 1)">
+        <a 
+          class="pagination-link"
+          aria-label="Goto page 1"
+          class.bind="page === 1 ? 'is-current' : ''">1</a>
+      </li>
+      <div 
+        style="display: contents;" 
+        show.bind="page !== 1 && page !== (totalPages)">
+        <li 
+          show.bind="page > 3">
+          <span class="pagination-ellipsis">&hellip;</span></li>
+        <li 
+          show.bind="page > 2">
+          <a 
+            class="pagination-link"
+            click.delegate="updatePage($event, page - 1)">${page - 1}</a></li>
+        <li><a class="pagination-link is-current" aria-current="page">${page}</a></li>
+        <li 
+          show.bind="page < (totalPages - 1)">
+          <a 
+            class="pagination-link" 
+            click.delegate="updatePage($event, page + 1)">${page + 1}</a>
+          </li>
+      </div>
+      <li 
+        show.bind="totalPages > 2 && ((page === 1 || page === (totalPages)) || (page > 1 && page < totalPages - 2))">
+        <span class="pagination-ellipsis">&hellip;</span></li>
+      <li 
+        click.delegate="updatePage($event, totalPages)">
+        <a 
+          class="pagination-link"
+          class.bind="page === (totalPages) ? 'is-current' : ''">${totalPages}</a></li>
+    </ul>
+  </nav>
+</template>

@@ -1,0 +1,12 @@
+<template>
+  <require from="./profile-preview"></require>
+  <require from="./pagination"></require>
+  
+  <div show.bind="profiles.length === 0">
+    <i>No profiles here.</i>
+  </div>
+  
+  <profile-preview repeat.for="profile of profiles" profile.bind="profile"></profile-preview>
+
+  <pagination if.bind="totalPages > 1" total-pages.bind="totalPages" page.bind="currentPage" set-page-cb.bind="setPageCb"></pagination>
+</template>

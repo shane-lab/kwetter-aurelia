@@ -1,0 +1,5 @@
+<template>
+  <require from="./profile-picture.css"></require>
+  
+  <figure class="image ${isLarge ? 'is-128x128' : 'is-64x64'}" class.bind="isRound ? 'rounded' : ''" css="background-image: url(${imageUrl})"></figure>
+</template>

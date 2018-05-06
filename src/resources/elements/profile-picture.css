@@ -1,0 +1,10 @@
+figure.image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #aaa;
+  border-radius: 5%;
+}
+figure.image.rounded {
+  border-radius: 50%;
+}

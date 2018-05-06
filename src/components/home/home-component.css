@@ -1,0 +1,7 @@
+a.level-item {
+  color: #979996;
+}
+
+a.level-item.active {
+  color: #3273dc;
+}

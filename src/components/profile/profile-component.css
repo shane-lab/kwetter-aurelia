@@ -1,0 +1,15 @@
+.unset {
+  font-style: oblique;
+}
+
+.sub-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+a.level-item {
+  color: #979996;
+}
+
+a.level-item.active {
+  color: #3273dc;
+}

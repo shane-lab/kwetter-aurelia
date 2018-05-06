@@ -1,0 +1,37 @@
+<template>
+  <require from="./profile-picture"></require>
+
+  <div class="box" style="margin-bottom: 6px;">
+    <article class="media">
+      <div class="media-left">
+        <profile-picture image-url="http://localhost:8080/api/v1/users/${kweet.author}/avatar" is-round.bind="true"></profile-picture>
+      </div>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <a route-href="route: profile; params.bind: {name: kweet.author}"><strong>${kweet.author}</a></strong>&nbsp;-&nbsp;<small title="${kweet.createdAt | date}">${kweet.createdAt | since}</small>
+            <br>
+            <span innerhtml.bind="kweet.message | hashtag | mention"></span>
+          </p>
+        </div>
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <a class="level-item" aria-label="reply">
+              <i class="ion-ios-heart${fill || favorited ? '' : '-outline'}" class.bind="fill || favorited ? 'has-text-primary' : ''" aria-hidden="true" click.delegate="mouseClick($event)" mouseenter.trigger="mouseOver($event)" mouseleave.trigger="mouseLeave($event)" disabled.bind="disabled"></i>&nbsp;${kweet.favorites}
+            </a>
+            <a class="level-item" aria-label="retweet">
+              <span class="icon is-small">
+                <i class="fas fa-retweet" aria-hidden="true"></i>
+              </span>
+            </a>
+            <a class="level-item" aria-label="like">
+              <span class="icon is-small">
+                <i class="fas fa-heart" aria-hidden="true"></i>
+              </span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </article>
+  </div>
+</template>

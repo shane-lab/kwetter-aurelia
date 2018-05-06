@@ -1,0 +1,38 @@
+<template>
+  <require from="../../resources/elements/quote"></require>
+
+  <div class="editor-page">
+    <div class="container page">
+      <h1 class="title">Create a new Kweet</h1>
+      <div class="columns">
+        
+        <div class="column is-three-quarters">
+          <form>
+            <div class="field">
+              <label class="label">Message</label>
+              <div class="control">
+                <textarea class="textarea" rows="8" placeholder="${sharedState.currentUser.kweets === 0 ? 'Write your first Kweet here': 'Your Kweet message'}" value.bind="message"></textarea>
+                <small class="has-text-grey-light">Leading and trailing whitespaces will be removed</small>
+                <div class="tags has-addons" title="Kweet message limit">
+                  <span class="tag" class.bind="length >= limit / 2 ? length >= limit ? 'is-danger' : 'is-warning' : ''" innerhtml.bind="length"></span>
+                  <span class="tag is-info">${limit}</span>
+                </div>
+              </div>
+            </div>
+            <button class="button is-primary" type="button" click.delegate="publish()" disabled.bind="length <= 0">
+              Publish Kweet
+            </button>
+          </form>
+        </div>
+
+        <div class="column">
+          <label class="has-text-grey">Need some inspiration ?</label>
+          <quote if.bind="quote" author.bind="quote.author" quote.bind="quote.quote"></quote>
+          <button class="button is-primary" click.delegate="inspiration()">Give me inspiration</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</template>

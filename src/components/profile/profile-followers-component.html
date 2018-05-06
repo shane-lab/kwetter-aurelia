@@ -1,0 +1,6 @@
+<template>
+  <require from="../../resources/elements/profile-list"></require>
+
+  <profile-list profiles.bind="profiles" total-pages.bind="totalPages" page-number.bind="pageNumber"
+                current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)"></profile-list>
+</template>

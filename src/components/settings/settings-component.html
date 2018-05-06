@@ -1,0 +1,125 @@
+<template>
+  <require from="./settings-component.css"></require>
+  <require from="../../resources/elements/profile-picture"></require>
+
+  <div class="settings-page">
+    <div class="container page">
+      <div class="columns">
+
+        <div class="column">
+          <h1 class="title">Your Settings</h1>
+
+          <ul class="error-messages">
+            <li repeat.for="key of errors | keys">${key}&nbsp;${errors[key]}</li>
+          </ul>
+
+          <form>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Profile Image</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <profile-picture id="profileImage" image-url.bind="imageUrl"
+                      is-large="true" type="file"  files="on-loaded.bind: dragAndDropHandler; on-error.bind: onDragAndDropFail; file-filter.bind: 'image.*'; allow-drop: true; max-file-size: 1024000;"></profile-picture>&nbsp;${profile.username}</p>
+                    <small class="has-text-grey-light">Drag 'n drop onto the avatar to upload a new profile picture (up to 1mb)</small>
+                  </div>
+                  <p class="help is-danger" show.bind="uploadAvatarError">${uploadAvatarError}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Username</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Your new username" value.bind="username & validate">
+                  </div>
+                  <p class="help is-danger" show.bind="usernameError">${usernameError}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Password</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input" type="password" placeholder="Your new password" value.bind="password & validate">
+                  </div>
+                  <p class="help is-danger" show.bind="passwordError">${passwordError}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Biography</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <textarea class="textarea" rows="8" placeholder="Short bio about you" value.bind="bio & validate"></textarea>
+                    <small class="has-text-grey-light">Leading and trailing whitespaces will be removed</small>
+                    <div class="tags has-addons" title="Kweet message limit">
+                      <span class="tag" class.bind="length >= limit / 2 ? length >= limit ? 'is-danger' : 'is-warning' : ''" innerhtml.bind="length"></span>
+                      <span class="tag is-info">${limit}</span>
+                    </div>
+                  </div>
+                  <p class="help is-danger" show.bind="bioError">${bioError}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Website</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Your website" value.bind="website & validate">
+                  </div>
+                  <p class="help is-danger" show.bind="websiteError">${websiteError}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Location</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Your location" value.bind="location">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <!-- Left empty for spacing -->
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-primary" click.trigger="update()" disabled.bind="!canSave">Update Settings</button>
+                  </div>
+                  <p class="help is-danger" show.bind="saveSettingsError">${saveSettingsError}</p>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <hr>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</template>

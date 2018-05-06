@@ -1,0 +1,12 @@
+<template>
+  <require from="./kweet-preview"></require>
+  <require from="./pagination"></require>
+
+  <div class="kweet-preview" show.bind="kweets.length === 0">
+    <i>No Kweets here... yet.</i>
+  </div>
+
+  <kweet-preview repeat.for="kweet of kweets" kweet.bind="kweet"></kweet-preview>
+
+  <pagination if.bind="totalPages > 1" total-pages.bind="totalPages" page.bind="currentPage" set-page-cb.bind="setPageCb"></pagination>
+</template>

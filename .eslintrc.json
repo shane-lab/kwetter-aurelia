@@ -1,0 +1,9 @@
+{
+  "extends": "./node_modules/aurelia-tools/.eslintrc.json",
+  "rules": {
+    "dot-notation":"off",
+    "no-nested-ternary":"off",
+    "no-cond-assign": "off",
+    "no-sequences": "off"
+  }
+}
