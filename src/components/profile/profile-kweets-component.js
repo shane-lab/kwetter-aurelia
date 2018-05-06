@@ -40,4 +40,8 @@ export class ProfileKweetsComponent {
     this.currentPage = pageNumber;
     this.getKweets();
   }
+
+  kweetDeleted(kweet) {
+    this.getKweets();
+  }
 }

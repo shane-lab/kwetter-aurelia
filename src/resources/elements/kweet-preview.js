@@ -4,8 +4,9 @@ import {inject} from 'aurelia-dependency-injection';
 import {SharedState} from '../../shared/state/shared-state';
 import {KweetService} from '../../shared/services/kweet-service';
 import {ToastService} from '../../shared/services/toast-service';
+import {DomEffectsService} from '../../shared/services/dom-effects-service';
 
-@inject(SharedState, KweetService, ToastService)
+@inject(SharedState, KweetService, ToastService, DomEffectsService)
 export class KweetPreview {
   /** @type{{
     id: number,
@@ -18,16 +19,19 @@ export class KweetPreview {
   }} */
   @bindable kweet;
   @bindable favorited;
+  @bindable onDeleteCb;
   fill = false;
   disabled = false;
 
   /** @type{SharedState} */sharedState;
   /** @type{KweetService} */kweetService;
   /** @type{ToastService} */toastService;
-  constructor(sharedState, kweetService, toastService) {
+  /** @type{DomEffectsService} */domEffectsService;
+  constructor(sharedState, kweetService, toastService, domEffectsService) {
     this.sharedState = sharedState;
     this.kweetService = kweetService;
     this.toastService = toastService;
+    this.domEffectsService = domEffectsService;
   }
 
   attached() {
@@ -42,7 +46,7 @@ export class KweetPreview {
     return this.sharedState.isAuthenticated && this.kweet.author === this.sharedState.currentUser.username;
   }
 
-  mouseClick($event) {
+  favorite(/** @type{MouseEvent} */$event) {
     if ($event.which !== 1) {
       return;
     }
@@ -60,15 +64,35 @@ export class KweetPreview {
       });
   }
 
-  mouseOver($event) {
+  delete(/** @type{MouseEvent} */$event) {
+    if ($event.which !== 1) {
+      return;
+    }
+    if (!this.sharedState.isAuthenticated) {
+      return this.toastService.info('To delete this Kweet, you must be signed in', 'Unauthorized');
+    }
+    if (!this.isUser) {
+      return this.toastService.info('You cannot delete other people\'s Kweets', 'Delete interrupted');
+    }
+    this.kweetService.destroy(this.kweet.id)
+      .then(_ => this.onDeleteCb && this.onDeleteCb({kweet: this.kweet}));
+  }
+
+  mouseOver(/** @type{MouseEvent} */$event) {
     if (this.isUser) {
+      if ($event.srcElement.tagName.toLowerCase() === 'button') {
+        $event.srcElement.classList.add('has-background-danger');
+      }
       return;
     }
     this.fill = true;
   }
 
-  mouseLeave($event) {
+  mouseLeave(/** @type{MouseEvent} */$event) {
     if (this.isUser) {
+      if ($event.srcElement.tagName.toLowerCase() === 'button') {
+        $event.srcElement.classList.remove('has-background-danger');
+      }
       return;
     }
     this.fill = false;

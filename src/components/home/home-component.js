@@ -102,4 +102,8 @@ export class HomeComponent {
 
     this.scrollService.scrollToElement(document.getElementById('container'), 100);
   }
+
+  kweetDeleted(kweet) {
+    this.getKweets();
+  }
 }

@@ -2,5 +2,5 @@
   <require from="../../resources/elements/kweet-list"></require>
 
   <kweet-list kweets.bind="kweets" total-pages.bind="totalPages" page-number.bind="pageNumber"
-                current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)"></kweet-list>
+                current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)" on-delete-cb.call="kweetDeleted(kweet)"></kweet-list>
 </template>

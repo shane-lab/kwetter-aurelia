@@ -25,7 +25,7 @@
           </nav>
 
           <kweet-list kweets.bind="kweets" total-pages.bind="totalPages" 
-            current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)"></kweet-list>
+            current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)" on-delete-cb.call="kweetDeleted(kweet)"></kweet-list>
         </div>
 
         <div class="column">

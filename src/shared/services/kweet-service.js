@@ -36,7 +36,7 @@ export class KweetService {
   }
 
   destroy(/** @type{number} */slug) {
-    return this.apiService.delete(`/kweets/${slug}`);
+    return this.apiService.delete(`/kweets/${slug}`, false);
   }
 
   save(/** @type{string} */kweetMessage) {

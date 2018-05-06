@@ -5,5 +5,6 @@ export class KweetList {
   @bindable totalPages;
   @bindable currentPage;
   @bindable setPageCb;
+  @bindable onDeleteCb;
 }
 

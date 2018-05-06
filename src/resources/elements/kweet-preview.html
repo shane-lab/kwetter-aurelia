@@ -8,6 +8,7 @@
       </div>
       <div class="media-content">
         <div class="content">
+          <button if.bind="isUser" class="delete is-pulled-right" click.delegate="delete($event)" mouseenter.trigger="mouseOver($event)" mouseleave.trigger="mouseLeave($event)"></button>
           <p>
             <a route-href="route: profile; params.bind: {name: kweet.author}"><strong>${kweet.author}</a></strong>&nbsp;-&nbsp;<small title="${kweet.createdAt | date}">${kweet.createdAt | since}</small>
             <br>
@@ -17,7 +18,7 @@
         <nav class="level is-mobile">
           <div class="level-left">
             <a class="level-item" aria-label="reply">
-              <i class="ion-ios-heart${fill || favorited ? '' : '-outline'}" class.bind="fill || favorited ? 'has-text-primary' : ''" aria-hidden="true" click.delegate="mouseClick($event)" mouseenter.trigger="mouseOver($event)" mouseleave.trigger="mouseLeave($event)" disabled.bind="disabled"></i>&nbsp;${kweet.favorites}
+              <i class="ion-ios-heart${isUser || fill || favorited ? '' : '-outline'}" class.bind="fill || favorited ? 'has-text-primary' : isUser ? 'has-text-grey' : ''" aria-hidden="true" click.delegate="favorite($event)" mouseenter.trigger="mouseOver($event)" mouseleave.trigger="mouseLeave($event)" disabled.bind="disabled"></i>&nbsp;${kweet.favorites}
             </a>
             <a class="level-item" aria-label="retweet">
               <span class="icon is-small">
