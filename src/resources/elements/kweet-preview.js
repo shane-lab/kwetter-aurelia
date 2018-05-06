@@ -4,9 +4,8 @@ import {inject} from 'aurelia-dependency-injection';
 import {SharedState} from '../../shared/state/shared-state';
 import {KweetService} from '../../shared/services/kweet-service';
 import {ToastService} from '../../shared/services/toast-service';
-import {DomEffectsService} from '../../shared/services/dom-effects-service';
 
-@inject(SharedState, KweetService, ToastService, DomEffectsService)
+@inject(SharedState, KweetService, ToastService)
 export class KweetPreview {
   /** @type{{
     id: number,
@@ -26,12 +25,10 @@ export class KweetPreview {
   /** @type{SharedState} */sharedState;
   /** @type{KweetService} */kweetService;
   /** @type{ToastService} */toastService;
-  /** @type{DomEffectsService} */domEffectsService;
-  constructor(sharedState, kweetService, toastService, domEffectsService) {
+  constructor(sharedState, kweetService, toastService) {
     this.sharedState = sharedState;
     this.kweetService = kweetService;
     this.toastService = toastService;
-    this.domEffectsService = domEffectsService;
   }
 
   attached() {
