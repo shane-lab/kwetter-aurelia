@@ -140,6 +140,12 @@ export class SettingsComponent {
     return Promise.resolve();
   }
 
+  deleteAvatar() {
+    this.profileService.removeAvatar()
+      // .then(_ => this.imageUrl = `http://localhost:8080/api/v1/users/${this.sharedState.currentUser.username}/avatar`)
+      // .catch(console.log);
+  }
+
   get isUser() {
     return this.username.toLowerCase() === this.sharedState.currentUser.username.toLowerCase();
   }

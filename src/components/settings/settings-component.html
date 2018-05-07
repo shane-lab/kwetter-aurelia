@@ -17,12 +17,13 @@
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">Profile Image</label>
+                <button class="delete is-pulled-right" click.delegate="deleteAvatar()"></button>
               </div>
               <div class="field-body">
                 <div class="field">
                   <div class="control">
                     <profile-picture id="profileImage" image-url.bind="imageUrl"
-                      is-large="true" type="file"  files="on-loaded.bind: dragAndDropHandler; on-error.bind: onDragAndDropFail; file-filter.bind: 'image.*'; allow-drop: true; max-file-size: 1024000;"></profile-picture>&nbsp;${profile.username}</p>
+                    is-large="true" type="file"  files="on-loaded.bind: dragAndDropHandler; on-error.bind: onDragAndDropFail; file-filter.bind: 'image.*'; allow-drop: true; max-file-size: 1024000;"></profile-picture>&nbsp;${profile.username}</p>
                     <small class="has-text-grey-light">Drag 'n drop onto the avatar to upload a new profile picture (up to 1mb)</small>
                   </div>
                   <p class="help is-danger" show.bind="uploadAvatarError">${uploadAvatarError}</p>

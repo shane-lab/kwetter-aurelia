@@ -67,6 +67,6 @@ export class ProfileService {
   }
 
   removeAvatar() {
-    return this.apiService.delete('/users/avatar');
+    return this.apiService.delete('/users/avatar', false);
   }
 }
