@@ -105,6 +105,18 @@
             "main": "index",
             "path": "../node_modules/aurelia-files/dist/amd",
             "resources": []
+          },
+          {
+            "name": "rxjs",
+            "main": "./index.js",
+            "path": "../node_modules/rxjs",
+            "resources": []
+          },
+          {
+            "name": "rxjs/operators",
+            "main": "./index.js",
+            "path": "../node_modules/rxjs/operators",
+            "resources": []
           }
         ]
       }

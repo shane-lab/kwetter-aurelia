@@ -1,13 +1,19 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
+import {Observable, Subject} from 'rxjs';
+import {finalize, map, retry} from 'rxjs/operators';
+
 import {SharedState} from '../../shared/state/shared-state';
 import {ProfileService} from '../../shared/services/profile-service';
 import {KweetService} from '../../shared/services/kweet-service';
 import {ToastService} from '../../shared/services/toast-service';
 import {QuoteService} from '../../shared/services/quote-service';
+import {SocketService} from '../../shared/services/socket-service';
 
-@inject(SharedState, ProfileService, KweetService, QuoteService, ToastService, Router)
+const URI = 'ws://localhost:4001'; // 10.50.0.81:8001
+
+@inject(SharedState, ProfileService, KweetService, SocketService, QuoteService, ToastService, Router)
 export class EditorComponent {
   message = '';
   quote = null;
@@ -16,16 +22,36 @@ export class EditorComponent {
   /** @type{SharedState} */sharedState;
   /** @type{ProfileService} */profileService;
   /** @type{KweetService} */kweetService;
+  /** @type{SocketService} */socketService;
   /** @type{QuoteService} */quoteService;
   /** @type{ToastService} */toastService;
   /** @type{Router} */router;
-  constructor(sharedState, profileService, kweetService, quoteService, toastService, router) {
+  constructor(sharedState, profileService, kweetService, socketService, quoteService, toastService, router) {
     this.sharedState = sharedState;
     this.profileService = profileService;
     this.kweetService = kweetService;
+    this.socketService = socketService;
     this.quoteService = quoteService;
     this.toastService = toastService;
     this.router = router;
+
+    this.connection = socketService.connect(URI)
+      .pipe(retry())
+      .pipe(map((/** @type{MessageEvent} */response) => {
+        try {
+          const data = JSON.parse(response.data);
+          const {event = 'unknown'} = data;
+          delete data.event;
+          console.log('response', response);
+          // const type = event === 'message' ? SocketMessageType.Message : event === 'change' ? SocketMessageType.Gate : SocketMessageType.Unkown;
+
+          return { event, data };
+        } catch (error) {
+          console.error('error');
+
+          return null;
+        }
+      }));
   }
 
   get length() {
@@ -34,6 +60,10 @@ export class EditorComponent {
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
+
+    this.connection.subscribe((message) => {
+      console.log('message', message);
+    });
   }
 
   publish() {
