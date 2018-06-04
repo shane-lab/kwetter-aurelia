@@ -24,6 +24,7 @@
             </div>
           </nav>
 
+          <div if.bind="newKweets > 0"><span class="clickable" click.delegate="loadKweets()">Show ${newKweets} new Kweet${newKweets === 1 ? '' : 's'}</span>, or <span class="clickable" click.delegate="enableLiveUpdate()">enable</span> live-update</span></div>
           <kweet-list kweets.bind="kweets" total-pages.bind="totalPages" 
             current-page.bind="currentPage" set-page-cb.call="setPageTo(pageNumber)" on-delete-cb.call="kweetDeleted(kweet)"></kweet-list>
         </div>

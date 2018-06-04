@@ -1,19 +1,17 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
-import {Observable, Subject} from 'rxjs';
-import {finalize, map, retry} from 'rxjs/operators';
+import {map, retry} from 'rxjs/operators';
 
 import {SharedState} from '../../shared/state/shared-state';
 import {ProfileService} from '../../shared/services/profile-service';
 import {KweetService} from '../../shared/services/kweet-service';
 import {ToastService} from '../../shared/services/toast-service';
 import {QuoteService} from '../../shared/services/quote-service';
-import {SocketService} from '../../shared/services/socket-service';
+import {SocketIoService} from '../../shared/services/socket-io-service';
+import {mapping} from '../../shared/validation/socket-message';
 
-const URI = 'ws://localhost:4001'; // 10.50.0.81:8001
-
-@inject(SharedState, ProfileService, KweetService, SocketService, QuoteService, ToastService, Router)
+@inject(SharedState, ProfileService, KweetService, SocketIoService, QuoteService, ToastService, Router)
 export class EditorComponent {
   message = '';
   quote = null;
@@ -22,7 +20,7 @@ export class EditorComponent {
   /** @type{SharedState} */sharedState;
   /** @type{ProfileService} */profileService;
   /** @type{KweetService} */kweetService;
-  /** @type{SocketService} */socketService;
+  /** @type{SocketIoService} */socketService;
   /** @type{QuoteService} */quoteService;
   /** @type{ToastService} */toastService;
   /** @type{Router} */router;
@@ -35,23 +33,9 @@ export class EditorComponent {
     this.toastService = toastService;
     this.router = router;
 
-    this.connection = socketService.connect(URI)
+    this.connection = this.socketService.connect()
       .pipe(retry())
-      .pipe(map((/** @type{MessageEvent} */response) => {
-        try {
-          const data = JSON.parse(response.data);
-          const {event = 'unknown'} = data;
-          delete data.event;
-          console.log('response', response);
-          // const type = event === 'message' ? SocketMessageType.Message : event === 'change' ? SocketMessageType.Gate : SocketMessageType.Unkown;
-
-          return { event, data };
-        } catch (error) {
-          console.error('error');
-
-          return null;
-        }
-      }));
+      .pipe(map(mapping));
   }
 
   get length() {
@@ -60,10 +44,6 @@ export class EditorComponent {
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
-
-    this.connection.subscribe((message) => {
-      console.log('message', message);
-    });
   }
 
   publish() {
@@ -76,7 +56,8 @@ export class EditorComponent {
     }
     const message = this.message.trimRight().trimLeft();
     this.kweetService.save(message)
-      .then(_ => {
+      .then(kweet => {
+        this.connection.next({event: 'kweet_create', data: kweet});
         this.toastService.success('Posted a new Kweet', 'success', { closeInterval: 2000 });
         this.router.navigateToRoute('home');
       });

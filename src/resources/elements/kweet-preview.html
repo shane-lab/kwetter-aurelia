@@ -1,7 +1,7 @@
 <template>
   <require from="./profile-picture"></require>
 
-  <div class="box" style="margin-bottom: 6px;">
+  <div class="box" style="margin-bottom: 6px;" style.bind="isDeleted ? 'background-color: #e1e1e1' : ''">
     <article class="media">
       <div class="media-left">
         <profile-picture image-url="http://localhost:8080/api/v1/users/${kweet.author}/avatar" is-round.bind="true"></profile-picture>
@@ -12,10 +12,10 @@
           <p>
             <a route-href="route: profile; params.bind: {name: kweet.author}"><strong>${kweet.author}</a></strong>&nbsp;-&nbsp;<small title="${kweet.createdAt | date}">${kweet.createdAt | since}</small>
             <br>
-            <span innerhtml.bind="kweet.message | hashtag | mention"></span>
+            <span innerhtml.bind="message | hashtag | mention"></span>
           </p>
         </div>
-        <nav class="level is-mobile">
+        <nav class="level is-mobile" if.bind="!isDeleted">
           <div class="level-left">
             <a class="level-item" aria-label="reply">
               <i class="ion-ios-heart${isUser || fill || favorited ? '' : '-outline'}" class.bind="fill || favorited ? 'has-text-primary' : isUser ? 'has-text-grey' : ''" aria-hidden="true" click.delegate="favorite($event)" mouseenter.trigger="mouseOver($event)" mouseleave.trigger="mouseLeave($event)" disabled.bind="disabled"></i>&nbsp;${kweet.favorites}

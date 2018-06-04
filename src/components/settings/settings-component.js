@@ -37,7 +37,7 @@ export class SettingsComponent {
       website: this.website,
       location: this.location
     };
-    this.imageUrl = `http://localhost:8080/api/v1/users/${user.username}/avatar`;
+    this.imageUrl = user.links.find((link) => link.rel === 'users.avatar.fetch').path || `http://localhost:8080/api/v1/users/${user.username}/avatar`;
 
     ValidationRules
       .ensure('username').minLength(profileRules.username.minLength).matches(profileRules.username.pattern)
@@ -100,6 +100,14 @@ export class SettingsComponent {
 
   get length() {
     return this.bio.trimLeft().length;
+  }
+
+  get autoUpdate() {
+    return !!window.localStorage['auto_update'];
+  }
+
+  set autoUpdate(state) {
+    return window.localStorage['auto_update'] = state;
   }
 
   update() {

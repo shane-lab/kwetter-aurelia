@@ -5,3 +5,8 @@ a.level-item {
 a.level-item.active {
   color: #3273dc;
 }
+
+.clickable {
+  color: #3273dc;
+  cursor: pointer;
+}

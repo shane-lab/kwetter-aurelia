@@ -58,6 +58,7 @@ export class KweetService {
   }
 
   unfavorite(/** @type{number} */slug) {
-    return this.apiService.delete(`/kweets/favorite/${slug}`, false)    .then(Boolean);
+    return this.apiService.delete(`/kweets/favorite/${slug}`, false)
+      .then(Boolean);
   }
 }

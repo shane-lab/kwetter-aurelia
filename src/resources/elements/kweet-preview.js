@@ -1,11 +1,15 @@
 import {bindable} from 'aurelia-framework';
 import {inject} from 'aurelia-dependency-injection';
 
+import {map, retry} from 'rxjs/operators';
+
 import {SharedState} from '../../shared/state/shared-state';
 import {KweetService} from '../../shared/services/kweet-service';
+import {SocketIoService} from '../../shared/services/socket-io-service';
 import {ToastService} from '../../shared/services/toast-service';
+import {mapping} from '../../shared/validation/socket-message';
 
-@inject(SharedState, KweetService, ToastService)
+@inject(SharedState, KweetService, SocketIoService, ToastService)
 export class KweetPreview {
   /** @type{{
     id: number,
@@ -24,11 +28,17 @@ export class KweetPreview {
 
   /** @type{SharedState} */sharedState;
   /** @type{KweetService} */kweetService;
+  /** @type{SocketIoService} */socketService;
   /** @type{ToastService} */toastService;
-  constructor(sharedState, kweetService, toastService) {
+  constructor(sharedState, kweetService, socketService, toastService) {
     this.sharedState = sharedState;
     this.kweetService = kweetService;
+    this.socketService = socketService;
     this.toastService = toastService;
+
+    this.connection = this.socketService.connect()
+      .pipe(retry())
+      .pipe(map(mapping));
   }
 
   attached() {
@@ -37,6 +47,14 @@ export class KweetPreview {
       this.kweetService.isFavoritedBy(this.kweet.id, this.sharedState.currentUser.username)
         .then(favorited => this.favorited = favorited);
     }
+  }
+
+  get message() {
+    return this.isDeleted ? '<i>This Kweet has been removed</i>' : this.kweet.message;
+  }
+
+  get isDeleted() {
+    return this.kweet.deleted;
   }
 
   get isUser() {
@@ -72,6 +90,7 @@ export class KweetPreview {
       return this.toastService.info('You cannot delete other people\'s Kweets', 'Delete interrupted');
     }
     this.kweetService.destroy(this.kweet.id)
+      .then(_ => this.connection.next({event: 'kweet_delete', data: this.kweet}))
       .then(_ => this.onDeleteCb && this.onDeleteCb({kweet: this.kweet}));
   }
 

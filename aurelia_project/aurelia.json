@@ -107,6 +107,12 @@
             "resources": []
           },
           {
+            "name": "es6-enum",
+            "main": "enum",
+            "path": "../node_modules/es6-enum/dist",
+            "resources": []
+          },
+          {
             "name": "rxjs",
             "main": "./index.js",
             "path": "../node_modules/rxjs",
@@ -116,6 +122,12 @@
             "name": "rxjs/operators",
             "main": "./index.js",
             "path": "../node_modules/rxjs/operators",
+            "resources": []
+          },
+          {
+            "name": "socket.io-client",
+            "main": "socket.io",
+            "path": "../node_modules/socket.io-client/dist",
             "resources": []
           }
         ]

@@ -9,18 +9,6 @@ import {AuthService} from './shared/services/auth-service';
 const unAuthorized = { publicOnly: true };
 const authorized = { auth: true };
 
-const p = () => new Promise((res, rej) => {
-
-});
-
-const ws = new WebSocket('ws://localhost');
-ws.onopen = function name(params) {
-  console.log('open');
-};
-ws.onmessage = function name(params) {
-  console.log(params);
-};
-
 @inject(AuthService)
 export class App {
   /** @type{Router} */router;

@@ -106,7 +106,8 @@ export class ApiService {
       body
     };
     return this.http.fetch(`${config.api_url}${path}`, options)
-      .then(this.tokenUpdater);
+      .then(this.tokenUpdater)
+      .then(parseResponse);
   }
 
   delete(/** @type{string} */path, parse = true) {
