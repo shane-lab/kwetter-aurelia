@@ -20,7 +20,6 @@ export class HomeComponent {
   totalPages = 0;
   currentPage = 1;
   limit = 10;
-  autoUpdate = false;
   newKweets = 0;
 
   /** @type{SharedState} */sharedState;
@@ -38,8 +37,6 @@ export class HomeComponent {
     this.socketService = socketService;
     this.toastService = toastService;
     this.scrollService = scrollService;
-
-    this.autoUpdate = window.localStorage['auto_update'];
 
     this.connection = this.socketService.connect()
       .pipe(retry())
@@ -68,13 +65,11 @@ export class HomeComponent {
             }
           }
           if (response.event === MessageEvent.KWEET_DELETE) {
-            // if (this.autoUpdate) {
-              const index = this.kweets.findIndex((kweet) => kweet.id === response.data.id) || -1;
-              console.log(index);
-              if (index !== -1) {
-                this.kweets[index].deleted = true;
-              }
-            // }
+            const index = this.kweets.findIndex((kweet) => kweet.id === response.data.id);
+
+            if (index !== -1) {
+              this.kweets[index].deleted = true;
+            }
           }
         }
       }
@@ -88,6 +83,10 @@ export class HomeComponent {
   attached() {
     this.getKweets();
     this.getTrends();
+  }
+
+  get autoUpdate() {
+    return !!window.localStorage['auto_update'];
   }
 
   loadKweets() {

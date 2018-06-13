@@ -6,9 +6,10 @@ import {config} from './config';
 import {SocketService, SocketInterface} from './socket-service';
 
 class SocketIO extends SocketInterface {
-  constructor(/** @type{String} */url) {
+  constructor(/** @type{String} */url, /** @type{String} */namespace) {
     super();
-    this.socket = io(url);
+    const uri = `${url}/${namespace || ''}`;
+    this.socket = io(uri);
 
     this.socket.on('message', data => this.onMessage && this.onMessage(data));
     this.socket.on('error', err => this.onError && this.onError(err));
@@ -16,7 +17,7 @@ class SocketIO extends SocketInterface {
   }
 
   send(data) {
-    this.socket.send(data);
+    this.socket.emit(data);
   }
 
   close() {
@@ -33,9 +34,9 @@ export class SocketIoService {
     this.socketService = socketService;
   }
 
-  connect(/** @type{String} */url = config.socket_url) {
+  connect(/** @type{String} */url = config.socket_url, /** @type{String} */namespace = config.socket_namespace) {
     if (!this.connection) {
-      this.connection = this.socketService.connect(new SocketIO(url));
+      this.connection = this.socketService.connect(new SocketIO(url, namespace));
     }
 
     return this.connection;
