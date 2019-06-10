@@ -728,9 +728,9 @@ aurelia-templating@^1.0.0, aurelia-templating@^1.3.0, aurelia-templating@^1.4.2,
     aurelia-path "^1.0.0"
     aurelia-task-queue "^1.1.0"
 
-aurelia-testing@1.0.0-beta.4.0.0:
-  version "1.0.0-beta.4.0.0"
-  resolved "https://registry.yarnpkg.com/aurelia-testing/-/aurelia-testing-1.0.0-beta.4.0.0.tgz#8814f3ef0abd175455a3ad221953e3a696df57f0"
+aurelia-testing@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/aurelia-testing/-/aurelia-testing-1.0.0.tgz#5e17cff35cb242557f7632f67356cc1f69dd8062"
   dependencies:
     aurelia-dependency-injection "^1.0.0"
     aurelia-framework "^1.0.0"
