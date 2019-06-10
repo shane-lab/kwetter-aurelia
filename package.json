@@ -28,7 +28,7 @@
   "peerDependencies": {},
   "devDependencies": {
     "aurelia-cli": "0.33.1",
-    "aurelia-testing": "1.0.0-beta.4.0.0",
+    "aurelia-testing": "1.0.0",
     "aurelia-tools": "2.0.0",
     "babel-eslint": "8.2.6",
     "babel-plugin-null-safe-accessor": "0.1.2",
