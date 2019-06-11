@@ -64,7 +64,7 @@
     "karma-sourcemap-loader": "0.3.7",
     "minimatch": "3.0.4",
     "through2": "2.0.3",
-    "uglify-js": "3.3.8",
+    "uglify-js": "3.6.0",
     "vinyl-fs": "3.0.3"
   }
 }
