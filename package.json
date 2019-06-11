@@ -55,7 +55,7 @@
     "gulp-rename": "1.2.2",
     "gulp-sourcemaps": "2.6.4",
     "gulp-watch": "5.0.1",
-    "html-minifier": "3.5.8",
+    "html-minifier": "3.5.21",
     "jasmine-core": "3.4.0",
     "karma": "2.0.5",
     "karma-babel-preprocessor": "7.0.0",
