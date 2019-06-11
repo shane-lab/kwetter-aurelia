@@ -18,7 +18,7 @@
     "bluebird": "3.5.1",
     "bulma": "0.7.5",
     "es6-enum": "1.1.0",
-    "moment": "2.20.1",
+    "moment": "2.24.0",
     "querystringify": "2.1.1",
     "requirejs": "2.3.5",
     "rxjs": "6.5.2",
