@@ -15,7 +15,7 @@
     "aurelia-files": "0.1.5",
     "aurelia-smooth-scroll": "github:gooy/aurelia-smooth-scroll",
     "aurelia-validation": "1.1.2",
-    "bluebird": "3.5.1",
+    "bluebird": "3.5.5",
     "bulma": "0.7.5",
     "es6-enum": "1.1.0",
     "moment": "2.20.1",
